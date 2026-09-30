@@ -18,21 +18,52 @@ def load_env():
 
 ENV = load_env()
 GEMINI_KEY = ENV.get("GEMINI_KEY", "")
+GROQ_KEY = ENV.get("GROQ_KEY", "")
 MODEL = "gemini-2.5-flash-lite"
 
-def gemini(prompt, retries=4):
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={GEMINI_KEY}"
+def groq(prompt):
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    body = {"model": "openai/gpt-oss-120b",
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.8, "response_format": {"type": "json_object"}}
+    for attempt in range(4):
+        try:
+            r = requests.post(url, json=body, timeout=90,
+                              headers={"Authorization": "Bearer " + GROQ_KEY})
+            if r.status_code == 200:
+                txt = r.json()["choices"][0]["message"]["content"]
+                return json.loads(txt)
+            if r.status_code != 429:
+                print("groq", r.status_code, r.text[:150], flush=True)
+                return None
+        except Exception as e:
+            print("groq retry", attempt, str(e)[:120], flush=True)
+        time.sleep(8 + attempt * 12)
+    return None
+
+def llm(prompt):
+    if GROQ_KEY:
+        r = groq(prompt)
+        if r is not None:
+            return r
+    return gemini(prompt)
+
+def gemini(prompt):
     body = {"contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {"temperature": 0.8, "responseMimeType": "application/json"}}
-    for attempt in range(retries):
+    for attempt in range(12):
+        model = "gemini-2.5-flash-lite" if attempt % 2 == 0 else "gemini-2.5-flash"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={GEMINI_KEY}"
         try:
             r = requests.post(url, json=body, timeout=90)
             if r.status_code == 200:
                 txt = r.json()["candidates"][0]["content"]["parts"][0]["text"]
                 return json.loads(txt)
+            wait = 20 + attempt * 10 if r.status_code == 429 else 5 + attempt * 7
         except Exception as e:
             print("gemini retry", attempt, str(e)[:120], flush=True)
-        time.sleep(5 + attempt * 7)
+            wait = 5 + attempt * 7
+        time.sleep(wait)
     return None
 
 def ig_summary(ig):
@@ -81,14 +112,15 @@ looking_for (2 sentences: what would fit them in a partner),
 dealbreakers (array of 2-4),
 communication_style (one sentence),
 evidence_notes (1-2 sentences citing which specific posts/roles you inferred from)."""
-    return gemini(prompt)
+    return llm(prompt)
 
 def compact_card(p):
     prof = p["profile"]
+    clip = lambda xs, n=4: [str(x)[:30] for x in (xs or [])[:n]]
     return {"id": p["id"], "name": p["name"],
-            "summary": prof.get("summary", ""), "hobbies": prof.get("hobbies", []),
-            "interests": prof.get("interests", []), "personality": prof.get("personality", []),
-            "looking_for": prof.get("looking_for", "")}
+            "summary": str(prof.get("summary", ""))[:140],
+            "interests": clip(prof.get("interests")),
+            "looking_for": str(prof.get("looking_for", ""))[:120]}
 
 def rank_for(person, others):
     prompt = f"""You are the dating agent representing {person['name']}. Based ONLY on your person's analyzed profile and the candidate cards below (each built from their public LinkedIn + Instagram), rank ALL candidates from best to worst romantic fit for your person.
@@ -97,7 +129,7 @@ YOUR PERSON: {json.dumps(compact_card(person), ensure_ascii=False)}
 CANDIDATES: {json.dumps([compact_card(o) for o in others], ensure_ascii=False)}
 
 Return strict JSON: {{"ranking": [{{"id": <candidate id>, "score": <0-100 integer>, "reason": "<one punchy sentence>"}}]}} with every candidate exactly once, best first."""
-    return gemini(prompt)
+    return llm(prompt)
 
 def run_date(a, b, turns=5):
     convo = []
@@ -111,10 +143,10 @@ THEIR PROFILE: {json.dumps(compact_card(other), ensure_ascii=False)}
 CONVERSATION SO FAR: {json.dumps(convo, ensure_ascii=False)}
 
 Return strict JSON: {{"message": "<your next message>"}}"""
-            out = gemini(prompt)
+            out = llm(prompt)
             msg = (out or {}).get("message", "...")
             convo.append({"speaker": me["name"], "message": msg})
-    verdict = gemini(f"""You are a matchmaker. Two agents just went on this date representing their people (profiles built from public LinkedIn + Instagram).
+    verdict = llm(f"""You are a matchmaker. Two agents just went on this date representing their people (profiles built from public LinkedIn + Instagram).
 A: {json.dumps(compact_card(a), ensure_ascii=False)}
 B: {json.dumps(compact_card(b), ensure_ascii=False)}
 DATE TRANSCRIPT: {json.dumps(convo, ensure_ascii=False)}
@@ -174,7 +206,7 @@ def main():
     dp = os.path.join(DATA, "dates.json")
     if os.path.exists(dp):
         dates = json.load(open(dp))
-    if not dates:
+    if len(dates) < 8:
         score = {}
         for pid, rk in rankings.items():
             for entry in rk[:3]:
@@ -183,6 +215,8 @@ def main():
         top = sorted(score.items(), key=lambda kv: -kv[1])[:8]
         byid = {p["id"]: p for p in profiles}
         for (ida, idb), s in top:
+            if any(set(d["pair"]) == {ida, idb} for d in dates):
+                continue
             print("date", byid[ida]["name"], "x", byid[idb]["name"], flush=True)
             dates.append(run_date(byid[ida], byid[idb]))
             json.dump(dates, open(dp, "w"), ensure_ascii=False, indent=1)
