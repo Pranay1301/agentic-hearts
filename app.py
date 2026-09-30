@@ -60,6 +60,9 @@ profiles = load("profiles.json", [])
 rankings = load("rankings.json", {})
 dates = load("dates.json", [])
 byid = {p["id"]: p for p in profiles}
+for p in profiles:
+    local_photo = os.path.join(DATA, "photos", p["id"]+".jpg")
+    p["photo"] = local_photo if os.path.exists(local_photo) else None
 
 st.sidebar.markdown('<p class="big">💘 Agentic Hearts</p>', unsafe_allow_html=True)
 st.sidebar.caption("Every person is an agent. The agents date for them.")
