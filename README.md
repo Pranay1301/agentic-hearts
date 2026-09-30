@@ -17,7 +17,7 @@ An agentic dating site. Every person is represented by an agent. The agents date
 ## Tech stack
 
 - **Scraping**: Apify actors - `apify/instagram-profile-scraper` (public IG profiles + latest post captions) and `harvestapi/linkedin-profile-scraper` (public LinkedIn profiles, no cookies/login). Free tier, REST API.
-- **Agents**: Google Gemini (2.5-flash / flash-lite) via REST - analyst agent, dating agents, matchmaker, ranker. JSON-mode outputs.
+- **Agents**: Google Gemini (2.5-flash / flash-lite) plus Groq gpt-oss-120b via REST - analyst agent, dating agents, matchmaker, ranker. JSON-mode outputs.
 - **App**: Python + Streamlit (dark theme, 5 pages: Home/Live Agent, People, Profile pages, Agent dates, Rankings).
 
 ## Run locally
@@ -29,3 +29,6 @@ streamlit run app.py
 
 Secrets (for the live "add a person" feature): `APIFY_TOKEN`, `GEMINI_KEY` in `.streamlit/secrets.toml` or env.
 The pre-run demo data in `data/` works with no keys.
+
+## Important
+This is a fictional AI showcase. Public-profile inferences are uncertain, and simulated dates are not real conversations, consent, or the people's stated romantic preferences.

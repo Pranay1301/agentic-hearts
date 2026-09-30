@@ -132,10 +132,14 @@ Return strict JSON: {{"ranking": [{{"id": <candidate id>, "score": <0-100 intege
     return llm(prompt)
 
 def run_date(a, b, turns=5):
-    convo = []
+    checkpoint = os.path.join(DATA, "partial_date.json")
+    old = json.load(open(checkpoint)) if os.path.exists(checkpoint) else {}
+    convo = old.get("transcript", []) if old.get("pair") == [a["id"],b["id"]] else []
     last = ""
     for t in range(turns):
         for me, other in ((a, b), (b, a)):
+            if t*2 + (0 if me is a else 1) < len(convo):
+                continue
             prompt = f"""You are {me['name']}'s personal dating agent, on a first date conversation with {other['name']}'s agent. You speak FOR {me['name']} in first person, faithfully using only what their profile says (from their public LinkedIn + Instagram). Be warm, witty, specific; reference real details from either profile. Keep each message 1-3 sentences. This is message {t+1} of {turns} from you.
 
 YOUR PERSON: {json.dumps(compact_card(me), ensure_ascii=False)}
@@ -145,7 +149,10 @@ CONVERSATION SO FAR: {json.dumps(convo, ensure_ascii=False)}
 Return strict JSON: {{"message": "<your next message>"}}"""
             out = llm(prompt)
             msg = (out or {}).get("message", "...")
+            if not out:
+                raise RuntimeError("Date generation incomplete; retry will resume")
             convo.append({"speaker": me["name"], "message": msg})
+            json.dump({"pair":[a["id"],b["id"]], "transcript":convo},open(checkpoint,"w"))
     verdict = llm(f"""You are a matchmaker. Two agents just went on this date representing their people (profiles built from public LinkedIn + Instagram).
 A: {json.dumps(compact_card(a), ensure_ascii=False)}
 B: {json.dumps(compact_card(b), ensure_ascii=False)}

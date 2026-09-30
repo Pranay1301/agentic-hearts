@@ -112,5 +112,119 @@
    "verdict": "Ghazal and Vineeta demonstrate strong alignment in their entrepreneurial spirit, AI‑driven product innovation, and shared focus on health‑focused beauty for families. Their enthusiastic exchange and concrete collaboration plan indicate a high likelihood of a productive partnership.",
    "best_moment": "They propose a crossover \"mom‑and‑me\" collection: a cotton‑candy scented sunscreen paired with sunset‑hued lip crayons, blending AI scent profiling and ML colour prediction."
   }
+ },
+ {
+  "pair": [
+   "p21",
+   "p24"
+  ],
+  "names": [
+   "Saransh Goila",
+   "Ranveer Brar"
+  ],
+  "transcript": [
+   {
+    "speaker": "Saransh Goila",
+    "message": "Hi Ranveer, I’ve been admiring how you bring forgotten Indian recipes back to life on screen – it’s the kind of storytelling that inspires my own culinary innovations and startup ventures. Would love to swap notes on blending tradition with modern entrepreneurship over a cup of chai."
+   },
+   {
+    "speaker": "Ranveer Brar",
+    "message": "Hey Saransh, thrilled you enjoyed the series on the forgotten dhansak I filmed for my latest food documentary – it’s amazing to see someone turning regional Indian flavors into a thriving venture. I’d love to hear how you’re blending that with your startup mindset, perhaps over a steaming cup of masala chai at my new concept café?"
+   },
+   {
+    "speaker": "Saransh Goila",
+    "message": "Sounds perfect, Ranveer—I'd love to compare notes on how my recent seed‑funded cloud‑kitchen platform is scaling regional dishes like Rajasthani dal baati while you’re reimagining dhansak on screen, and perhaps brainstorm a pop‑up that pairs your storytelling with my data‑driven menu design over that masala chai."
+   },
+   {
+    "speaker": "Ranveer Brar",
+    "message": "I’m thrilled to see how your data‑driven menu can give a fresh algorithmic twist to my dhansak narrative—perhaps we can prototype a pop‑up where each bite tells a story while the analytics tell us what fans love next. Let’s meet at my new concept café next Thursday at 4 pm for that steaming masala chai and brainstorm the perfect blend of tradition and tech."
+   },
+   {
+    "speaker": "Saransh Goila",
+    "message": "Fantastic, Thursday 4 pm works – I’ll bring a prototype of our AI‑curated dal baati tasting, and maybe we can let the masala chai be our live data point for flavor feedback. Looking forward to turning our culinary story into a real‑time experiment!"
+   },
+   {
+    "speaker": "Ranveer Brar",
+    "message": "Can't wait to see your AI‑curated dal baati in action – I’ll have a mini tasting station ready at the pop‑up where each spoonful is paired with a snippet from my dhansak film. By the way, I’ve been experimenting with a global twist on Rajasthani spices for the café menu and would love your take. See you Thursday at 4 pm for that data‑driven chai!"
+   },
+   {
+    "speaker": "Saransh Goila",
+    "message": "Your global spin on Rajasthani spices sounds thrilling—I’ll have our AI‑curated dal baati ready to let the chai data guide the flavor tweaks. Afterwards, let’s brainstorm a seed‑stage partnership that blends our storytelling and tech for a traveling pop‑up series."
+   },
+   {
+    "speaker": "Ranveer Brar",
+    "message": "Absolutely, the idea of a traveling pop‑up that marries my filmic storytelling with your AI‑curated menus excites me—imagine each city getting its own mini‑doc that unlocks the next flavor algorithm. I’ll prep a short teaser reel of the Rajasthani‑global blend for our first stop, and we can map out the seed‑stage roadmap over that data‑rich chai."
+   },
+   {
+    "speaker": "Saransh Goila",
+    "message": "Can't wait to see the teaser – I’ll sync our AI to capture real‑time reactions and we can sketch the seed‑stage roadmap while the chai records the data. Here’s to turning our flavors into a traveling documentary series!"
+   },
+   {
+    "speaker": "Ranveer Brar",
+    "message": "Looking forward to that AI‑driven flavor diary – I’ll bring a 30‑second teaser of the Rajasthani‑global blend and a quick behind‑the‑scenes clip from my dhansak doc for us to sync with your data. Let’s let the chai be our live soundtrack as we map the first stop of the traveling series."
+   }
+  ],
+  "verdict": {
+   "score": 92,
+   "verdict": "Both agents share a deep passion for Indian culinary heritage, innovative storytelling, and entrepreneurship, making their connection exceptionally strong. Their mutual enthusiasm for blending tech-driven menus with filmic narratives suggests a promising personal and professional partnership.",
+   "best_moment": "When they agreed to prototype a pop‑up that pairs Ranveer’s dhansak storytelling with Saransh’s AI‑curated dal baati menu over a cup of masala chai."
+  }
+ },
+ {
+  "pair": [
+   "p04",
+   "p20"
+  ],
+  "names": [
+   "Ghazal Alagh",
+   "Diipa Khosla"
+  ],
+  "transcript": [
+   {
+    "speaker": "Ghazal Alagh",
+    "message": "Hi Diipa, I’m thrilled to connect—I've been following indē wild’s sustainable beauty journey and love how you champion women’s empowerment. As a fellow mom‑preneur behind Mamaearth, I’m always excited to chat about turning wellness into a brand story."
+   },
+   {
+    "speaker": "Diipa Khosla",
+    "message": "Hi Ghazal, thank you! I’m thrilled that indē wild’s sustainable ethos resonates with you—your Mamaearth journey of turning everyday mom concerns into science‑backed solutions is truly inspiring. Maybe we can brainstorm a joint initiative that blends mental‑health awareness with clean beauty for both our communities."
+   },
+   {
+    "speaker": "Ghazal Alagh",
+    "message": "I love the idea of a clean‑beauty mental‑wellness campaign—perhaps a limited‑edition “MamaMind” kit that pairs Mamaearth’s probiotic sunscreen with indē wild’s calming facial mist, even featuring an AI‑driven skin‑quiz for our community. Let’s schedule a virtual chai chat so I can share the data on how moms respond to tech‑enabled wellness."
+   },
+   {
+    "speaker": "Diipa Khosla",
+    "message": "A virtual chai sounds perfect—how does Thursday 4 pm IST work for you? I’m excited to dive into your AI‑driven skin‑quiz data and explore how we can weave mindful tech into our clean‑beauty story."
+   },
+   {
+    "speaker": "Ghazal Alagh",
+    "message": "Thursday 4 pm IST works perfectly—I'll bring my AI‑powered skin‑quiz insights and a chai blend my kids adore. Looking forward to co‑creating a mindful beauty experience that empowers both moms and your community!"
+   },
+   {
+    "speaker": "Diipa Khosla",
+    "message": "Fantastic, Ghazal! I’ll have my favorite chai blend ready and a quick mindfulness exercise from my Pos NGO to kick off our chat—can’t wait to blend AI, sunscreen and serenity."
+   },
+   {
+    "speaker": "Ghazal Alagh",
+    "message": "Perfect, Diipa—I'll have my kids' favorite turmeric‑ginger chai on standby and a fun AI‑generated skin‑story to kick off our session. Looking forward to merging mindfulness, tech, and sunshine vibes for a truly radiant collaboration!"
+   },
+   {
+    "speaker": "Diipa Khosla",
+    "message": "I’m already picturing us sipping your kids’ turmeric‑ginger chai while I stir in a dash of cardamom‑spiced masala for extra zest—let’s kick off with a 2‑minute gratitude circle from my Pos NGO to set the vibe before we dive into the AI‑skin story."
+   },
+   {
+    "speaker": "Ghazal Alagh",
+    "message": "Sounds wonderful—I'll kick off our gratitude circle with a quick shout‑out to the resilient moms who inspire both Mamaearth and indē wild, then we can dive into the AI‑skin story over turmeric‑ginger chai. Excited to blend our passions for clean beauty, mental wellness, and tech!"
+   },
+   {
+    "speaker": "Diipa Khosla",
+    "message": "Can't wait to sip that turmeric‑ginger chai while we launch our gratitude circle and see the AI‑skin story come alive—here’s to empowering moms and making clean beauty smarter together! I’ll send over a quick outline of the mindfulness exercise so we can jump right in at 4 pm."
+   }
+  ],
+  "verdict": {
+   "score": 92,
+   "verdict": "Ghazal and Diipa demonstrate a strong alignment in their entrepreneurial spirit, commitment to clean beauty, and focus on mental‑wellness and technology. Their conversation shows mutual enthusiasm for a collaborative product and shared values, making them highly compatible partners.",
+   "best_moment": "When Ghazal suggested the limited‑edition “MamaMind” kit pairing Mamaearth’s probiotic sunscreen with indē wild’s calming facial mist and an AI‑driven skin‑quiz."
+  }
  }
 ]

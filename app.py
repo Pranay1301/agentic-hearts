@@ -51,6 +51,7 @@ byid = {p["id"]: p for p in profiles}
 
 st.sidebar.markdown('<p class="big">💘 Agentic Hearts</p>', unsafe_allow_html=True)
 st.sidebar.caption("Every person is an agent. The agents date for them.")
+st.sidebar.info("Fictional AI showcase using public profiles. Inferred traits and simulated dates are not these people's stated romantic preferences, consent, or real conversations.")
 page = st.sidebar.radio("Go to", ["🏠 Home & Live Agent", "👥 People", "🧬 Profile pages", "💬 Agent dates", "🏆 Rankings"])
 
 if page == "🏠 Home & Live Agent":
