@@ -38,7 +38,19 @@ def gemini(prompt):
     return None
 
 def apify_sync(actor, payload):
+    # Re-run analysis on previously fetched public source records without credentials.
+    if "instagram" in actor:
+        handles = payload.get("usernames", [])
+        cached = [x for x in load("ig_data.json", []) if x.get("username") in handles]
+    else:
+        urls = payload.get("urls", [])
+        slugs = [u.rstrip("/").split("/in/")[-1] for u in urls]
+        cached = [x for x in load("li_data.json", []) if x.get("publicIdentifier") in slugs or x.get("linkedinUrl") in urls]
+    if cached:
+        return cached
     tok = secret("APIFY_TOKEN")
+    if not tok:
+        return []
     r = requests.post(f"https://api.apify.com/v2/acts/{actor}/run-sync-get-dataset-items?token={tok}",
                       json=payload, timeout=300)
     return r.json() if r.status_code in (200, 201) else []
@@ -88,7 +100,12 @@ if page == "🏠 Home & Live Agent":
 LINKEDIN: {json.dumps({"headline": li0.get("headline"), "about": (li0.get("about") or li0.get("summary") or "")[:800], "experience": (li0.get("experience") or [])[:5]}, ensure_ascii=False)}
 INSTAGRAM: {json.dumps({"full_name": ig0.get("fullName"), "bio": ig0.get("biography") or "", "followers": ig0.get("followersCount"), "captions": caps}, ensure_ascii=False)}
 Return strict JSON: summary, needs (4-6), hobbies (4-8), interests (4-8), personality (4-6), values (3-5), lifestyle, looking_for, dealbreakers (2-4), communication_style, evidence_notes."""
-                prof = gemini(prompt)
+                prof = gemini(prompt) if secret("GEMINI_KEY") else None
+                if not prof:
+                    cached_person = next((p for p in profiles if p["linkedin"].rstrip("/") == li.rstrip("/") and p["instagram"].rstrip("/") == ig.rstrip("/")), None)
+                    if cached_person:
+                        prof = cached_person["profile"]
+                        st.write("Loaded the saved analyst result from these same two public sources.")
                 if not prof:
                     s.update(state="error"); st.error("The analyst agent is busy - try again in a minute.")
                     st.stop()
